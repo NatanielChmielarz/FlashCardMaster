@@ -1,0 +1,36 @@
+.card-list{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+.actionButtons{
+    button{
+        margin-top: 20px;
+        padding: 1rem 2rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        border-radius: 0.25rem;
+        color: #EDEDFE;
+        background-color: #5155C3;
+        border-radius: 6px;
+    }
+}
+.ChallengeHeader{
+    padding: 40px 20px;
+    border: 1px solid #ccc;
+    background: #EDEDFE;
+    border-radius: 5px;
+    button{
+        margin-top: 20px;
+        margin-right: 10px;
+        padding: 1rem 2rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        border-radius: 0.25rem;
+        color: #EDEDFE;
+        background-color: #5155C3;
+        border-radius: 6px;
+    }
+}
