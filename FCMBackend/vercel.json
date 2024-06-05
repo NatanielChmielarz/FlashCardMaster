@@ -1,13 +1,13 @@
 {
     "builds":[{
-        "src":"FCMBackend/wsgi.py",
+        "src":"FCMBackend/asgi.py",
         "use":"@vercel/python"
         
     }],
     "routes":[
         {
             "src":"/(.*)",
-            "dest":"FCMBackend/wsgi.py"
+            "dest":"FCMBackend/asgi.py"
         }
     ]
 }
