@@ -4,7 +4,7 @@ export const UpdateFlashCard = async(id,flashcard) => {
     const accessToken = localStorage.getItem("accessToken");
 
     const response =await axios.put(
-      `http://127.0.0.1:8000/notes/flashcard/${id}/`,
+      `https://flash-card-master-backend.vercel.app/notes/flashcard/${id}/`,
       flashcard,
       {
         headers: {
@@ -27,7 +27,7 @@ export const GetFlashCardDetails = async(id) => {
     const accessToken = localStorage.getItem("accessToken");
     
     const response =await axios.get(
-      `http://127.0.0.1:8000/notes/flashcard/${id}/`,
+      `https://flash-card-master-backend.vercel.app/notes/flashcard/${id}/`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -47,7 +47,7 @@ export const DeleteFlashCard = async(id) => {
     const accessToken = localStorage.getItem("accessToken");
   
     await axios.delete(
-      `http://127.0.0.1:8000/notes/flashcard/${id}/`,
+      `https://flash-card-master-backend.vercel.app/notes/flashcard/${id}/`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -67,7 +67,7 @@ export const CreateFlashCard = async (id, flashcard) => {
     const accessToken = localStorage.getItem("accessToken");
   
     const response =await axios.post(
-      `http://127.0.0.1:8000/notes/${id}/flashcards`,
+      `https://flash-card-master-backend.vercel.app/notes/${id}/flashcards`,
       flashcard,
       {
         headers: {
@@ -87,7 +87,7 @@ export const fetchFlashCard = async (id) => {
     const accessToken = localStorage.getItem("accessToken");
  
     const response =await axios.get(
-      `http://127.0.0.1:8000/notes/${id}/flashcards`,
+      `https://flash-card-master-backend.vercel.app/notes/${id}/flashcards`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -103,7 +103,7 @@ export const fetchFlashCard = async (id) => {
 export const fetchNote = async (id) => {
   try {
     const accessToken = localStorage.getItem("accessToken");
-    const response = await axios.get(`http://127.0.0.1:8000/notes/${id}/`, {
+    const response = await axios.get(`https://flash-card-master-backend.vercel.app/notes/${id}/`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -117,7 +117,7 @@ export const fetchNote = async (id) => {
 export const fetchData = async () => {
   try {
     const accessToken = localStorage.getItem("accessToken");
-    const response = await axios.get("http://127.0.0.1:8000/notes/", {
+    const response = await axios.get("https://flash-card-master-backend.vercel.app/notes/", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -132,7 +132,7 @@ export const updateNote = async (id, title, content) => {
   try {
     const accessToken = localStorage.getItem("accessToken");
     await axios.put(
-      `http://127.0.0.1:8000/notes/${id}/`,
+      `https://flash-card-master-backend.vercel.app/notes/${id}/`,
       { title, content },
       {
         headers: {
@@ -149,7 +149,7 @@ export const deleteNote = async (id) => {
   try {
     const accessToken = localStorage.getItem("accessToken");
     await axios.delete(
-      `http://127.0.0.1:8000/notes/${id}/`,
+      `https://flash-card-master-backend.vercel.app/notes/${id}/`,
 
       {
         headers: {
@@ -169,7 +169,7 @@ export const createNote = async () => {
   };
   const accessToken = localStorage.getItem("accessToken");
   try {
-    const response = await axios.post("http://127.0.0.1:8000/notes/", note, {
+    const response = await axios.post("https://flash-card-master-backend.vercel.app/notes/", note, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
