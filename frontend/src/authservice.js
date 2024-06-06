@@ -28,14 +28,14 @@ export const clearTokens = () => {
 
 export function verifyAccessToken() {
   const token = getAccessToken();
-  return axios.post('http://127.0.0.1:8000/account/token/verify/', {
+  return axios.post('https://flash-card-master-backend.vercel.app/account/token/verify/', {
     token: token
   });
 }
 
 export function  refreshAccessToken() {
   const refreshToken = getRefreshToken();
-  return axios.post('http://127.0.0.1:8000/account/token/refresh/', {
+  return axios.post('https://flash-card-master-backend.vercel.app/account/token/refresh/', {
     refresh: refreshToken
   })
   .then(response => {

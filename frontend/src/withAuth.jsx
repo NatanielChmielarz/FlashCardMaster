@@ -7,7 +7,6 @@ const withAuth = (WrappedComponent) => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
 
     useEffect(() => {
       const verifyToken = async () => {
@@ -24,22 +23,24 @@ const withAuth = (WrappedComponent) => {
           }
         } finally {
           setIsLoading(false);
-          setHasCheckedAuth(true);
         }
       };
 
-      if (!hasCheckedAuth) {
-        verifyToken();
+      verifyToken();
+    }, []);
+
+    useEffect(() => {
+      if (!isLoading && !isAuthenticated) {
+        // navigate('/login'); // Przekierowanie na stronę logowania po zakończeniu weryfikacji
       }
-    }, [navigate, hasCheckedAuth]);
+    }, [isLoading, isAuthenticated, navigate]);
 
     if (isLoading) {
       return <div>Loading...</div>;
     }
 
     if (!isAuthenticated) {
-      navigate('/login'); // Przekierowanie tylko raz
-      return null; // lub komponent logowania
+      return null; // Lub komponent logowania, lub inny komunikat
     }
 
     return <WrappedComponent {...props} />;

@@ -45,7 +45,7 @@ export default function Register() {
     } else {
       setSubmitted(true);
       setErrors({});
-      axios.post('http://127.0.0.1:8000/account/register/', {
+      axios.post('https://flash-card-master-backend.vercel.app/account/register/', {
         username: data.username,
         email: data.email,
         password: data.password,

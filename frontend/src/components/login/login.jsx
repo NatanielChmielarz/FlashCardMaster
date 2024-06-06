@@ -40,7 +40,7 @@ export default function AuthInputs() {
     } else {
       setErrors({});
       // Wysyłanie danych logowania do endpointa
-      axios.post('http://127.0.0.1:8000/account/token/', {
+      axios.post('https://flash-card-master-backend.vercel.app/account/token/', {
         email: data.email,
         password: data.password,
       })
