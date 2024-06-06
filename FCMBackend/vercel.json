@@ -4,7 +4,13 @@
         "use":"@vercel/python",
         "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
         
+        
     }],
+    "build": {
+        "env": {
+          "PYTHON_VERSION": "3.11"
+        }
+      },
     "routes":[
         {
             "src":"/(.*)",
