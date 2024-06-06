@@ -30,7 +30,7 @@ SECRET_KEY =  os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG")  == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
-CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','https://flash-card-master.vercel.app/']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','https://flash-card-master.vercel.app']
 
 # Application definition
 
