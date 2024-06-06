@@ -56,6 +56,15 @@
   }
   @media (max-width: 746px)
   {
+    .notes-bar{
+      flex-direction: column;
+      h1{
+        text-align: center;
+      }
+      button{
+        margin-top: 15px;
+      }
+    }
     .wrapper{
       padding: 1.5rem 1.5rem;
       height: 650px;
@@ -64,6 +73,9 @@
   
   @media (max-width: 423px)
   {
+    .upper-buttons{
+      margin-top: 15px;
+    }
     .wrapper{
       height: 700px;
     }
