@@ -23,7 +23,6 @@ export const clearTokens = () => {
   
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
-  window.location.reload();
 }
 
 export function verifyAccessToken() {
