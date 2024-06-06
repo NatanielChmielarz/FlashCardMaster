@@ -19,28 +19,22 @@ const withAuth = (WrappedComponent) => {
             setIsAuthenticated(true);
           } catch (error) {
             clearTokens();
-            setIsAuthenticated(false);
+            navigate('/login');
           }
         } finally {
-          setIsLoading(false);
+          setIsLoading(false); // Ustawienie isLoading na false, gdy proces weryfikacji się zakończy
         }
       };
 
       verifyToken();
-    }, []);
-
-    useEffect(() => {
-      if (!isLoading && !isAuthenticated) {
-        // navigate('/login'); // Przekierowanie na stronę logowania po zakończeniu weryfikacji
-      }
-    }, [isLoading, isAuthenticated, navigate]);
+    }, [navigate]);
 
     if (isLoading) {
       return <div>Loading...</div>;
     }
 
     if (!isAuthenticated) {
-      return null; // Lub komponent logowania, lub inny komunikat
+      return null; // lub inna obsługa w przypadku, gdy użytkownik nie jest uwierzytelniony
     }
 
     return <WrappedComponent {...props} />;

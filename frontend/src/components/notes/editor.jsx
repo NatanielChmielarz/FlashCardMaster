@@ -92,7 +92,7 @@ const Editor = ({data,setdata,update_note,delete_note}) => {
     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
   };
   const convertToPdf = () => {
-    html2pdf().set(options).from(value).save();
+    html2pdf().set(options).from(data.content).save();
   };
   const HandleChange = (id, value) => {
     setdata((prevdata) => {
