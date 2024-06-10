@@ -7,6 +7,7 @@ import Notes from './components/notes/notes.jsx';
 import Flashcards from './components/flashcards/flashcards.jsx';
 import Challenge from './components/flashcards/challenge.jsx';
 import Root from './App.jsx';
+import Callendar from './components/calendar/calendar.jsx';
 import './index.css';
 import {
     createBrowserRouter,
@@ -26,6 +27,11 @@ import {
       {
         path: "/Register",
         element: <Register/>,
+      //   errorElement: <ErrorPage />,
+      },
+      {
+        path: "/Callendar",
+        element: <Callendar/>,
       //   errorElement: <ErrorPage />,
       },
       {

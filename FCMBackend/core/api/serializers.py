@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import Notes, Flashcards
+from core.models import Notes, Flashcards,Events
 class NotesSerializer(serializers.ModelSerializer):
     flashcards_count = serializers.SerializerMethodField()
 
@@ -15,3 +15,9 @@ class FlashcardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Flashcards
         exclude =('notes',)
+        
+        
+class EventsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Events
+        exclude = ('user',)

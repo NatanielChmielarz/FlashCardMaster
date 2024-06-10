@@ -14,4 +14,9 @@ class Flashcards(models.Model):
     emoji = models.CharField(max_length=50, blank=True)
     question = models.CharField(max_length=200)
     answer = models.CharField(max_length=200)
+
+class Events(models.Model):
+    title = models.CharField(max_length=80)
+    date = models.DateField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_events')
     

@@ -1,0 +1,31 @@
+.CalendarSection{
+
+    width: 100%;
+ 
+    padding: 2rem;
+    border-radius: 0.5rem;
+    -webkit-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
+  -moz-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
+  box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
+    background: #EDEDFE;
+    color: rgb(16, 16, 16);
+    .input {
+        width: 100%;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      
+      .button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #fff;
+        background-color: #5155c3;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+}
