@@ -47,7 +47,8 @@ INSTALLED_APPS = [
      'core',
      'rest_framework_swagger',
     'drf_yasg',
-    'corsheaders'
+    'corsheaders',
+    'events'
     
 ]
 

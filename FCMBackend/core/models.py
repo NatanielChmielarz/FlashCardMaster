@@ -18,5 +18,6 @@ class Flashcards(models.Model):
 class Events(models.Model):
     title = models.CharField(max_length=80)
     date = models.DateField()
+    is_active = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_events')
     

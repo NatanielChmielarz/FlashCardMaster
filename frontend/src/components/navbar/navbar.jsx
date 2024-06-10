@@ -93,7 +93,8 @@ const Sidebar = () => {
 
       <div className="center">
         <ul>
-          <li onClick={clearTokens}>
+          <li onClick={()=>{clearTokens(), window.location.reload()}
+        }>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

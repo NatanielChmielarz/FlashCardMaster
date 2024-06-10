@@ -17,7 +17,8 @@ urlpatterns = [
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
     path('admin/', admin.site.urls),
     path('account/', include('user_app.api.urls')),
-    path('notes/',include('core.api.urls'))
+    path('notes/',include('core.api.urls')),
+    path('events/',include('events.urls')),
     
 ]
 if settings.DEBUG:
