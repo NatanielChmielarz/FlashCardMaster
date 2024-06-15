@@ -3,18 +3,24 @@ import Grid from "@mui/material/Grid";
 import { NavLink } from "react-router-dom";
 import withAuth from "../../withAuth.jsx";
 import Layout from "../layout/layout";
-import { fetchData, createNote } from "../api.js";
+import { fetchData, createNote,getEvents } from "../api.js";
 import Item from "./item";
 import "./dashboard.scss";
 
 const Dashboard = () => {
   const [value, setValue] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [events, setEvents] = useState([]);
   useEffect(() => {
     const getData = async () => {
       try {
         const data = await fetchData();
+        const events_data = await getEvents('active')
+        const sortedEvents = events_data.sort((a, b) => new Date(a.date) - new Date(b.date));
+        // Take only the first 3 events closest to today's date
+        const upcomingEvents = sortedEvents.slice(0, 3);
+        setEvents(upcomingEvents);
+        
         setValue(data);
       } catch (error) {
         console.error("Błąd pobierania danych:", error);
@@ -35,9 +41,11 @@ const Dashboard = () => {
         <Grid item md={7} sm={12}>
           <div className="content-box">
             <h1>Nadchodzące wydarzenia</h1>
-            <p>20.06.2024 - Zaliczenie angielski</p>
-            <p>25.06.2024 - Egzamin wos</p>
-            <p>30.06.2024 - Zaliczenie matematyki</p>
+            {events.map(event => (
+                    <p key={event.id}>
+                        <span>{event.title} - {event.date}</span>
+                    </p>
+                ))}
           </div>
         </Grid>
         <Grid item md={5} sm={12}>
