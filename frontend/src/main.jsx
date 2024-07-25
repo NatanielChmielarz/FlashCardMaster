@@ -6,6 +6,7 @@ import Dashboard from './components/dashboard/dashboard.jsx';
 import Notes from './components/notes/notes.jsx';
 import Flashcards from './components/flashcards/flashcards.jsx';
 import Challenge from './components/flashcards/challenge.jsx';
+import Profile from './components/profile/profile.jsx';
 import Root from './App.jsx';
 import Callendar from './components/calendar/calendar.jsx';
 import './index.css';
@@ -49,6 +50,10 @@ import {
         element: <Challenge/>,
       //   errorElement: <ErrorPage />,
       },
+      {
+        path: "/Profile",
+        element: <Profile/>,
+      }
    
 
   ]);
