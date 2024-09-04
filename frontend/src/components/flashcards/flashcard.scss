@@ -34,6 +34,14 @@
       }
     }
   }
+  @media (max-width: 1199px)
+  {
+    .Flashcard_menu{
+      width: 100% !important;
+      margin-top: 30px;
+      margin-left: 0px;
+    }
+  }
   .flashcard-container {
     display: flex;
     justify-content: space-between;

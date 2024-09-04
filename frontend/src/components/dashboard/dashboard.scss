@@ -7,7 +7,9 @@
   border-radius: 0.5rem;
   box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
 }
-
+.dynamic-height{
+  height: auto;
+}
 .notes-bar {
   display: flex;
   align-items: center;

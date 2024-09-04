@@ -1,14 +1,14 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef,useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import html2pdf from "html2pdf.js";
 import QuillEditor from "react-quill";
-
+import { useNavigate, useLocation } from "react-router-dom"; 
 import "./notes.scss";
 import "react-quill/dist/quill.snow.css";
 
 const Editor = ({ data, setdata, update_note, delete_note }) => {
   const quillRef = useRef(null);
-
+  const saveTimeoutRef = useRef(null);
   const imageHandler = useCallback(() => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
@@ -94,20 +94,44 @@ const Editor = ({ data, setdata, update_note, delete_note }) => {
   const convertToPdf = () => {
     html2pdf().set(options).from(data.content).save();
   };
+  
   const HandleChange = (id, value) => {
-    setdata((prevdata) => {
-      return {
-        ...prevdata,
-        [id]: value,
-      };
-    });
+    setdata((prevdata) => ({
+      ...prevdata,
+      [id]: value,
+    }));
   };
+
+
+  const startSaveTimer = useCallback(() => {
+    
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+   
+    saveTimeoutRef.current = setTimeout(() => {
+      update_note();
+      saveTimeoutRef.current = null; 
+    }, 10000); 
+  }, [update_note]);
+
+  
+  useEffect(() => {
+    
+    startSaveTimer();
+
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+    };
+  }, [data.title, data.content, startSaveTimer]);
   return (
     <>
       <div className={"wrapper"}>
         <div className="action-buttons">
           <Grid container >
-            <Grid item lg={6} sm={12}>
+            <Grid item lg={6} md={6} sm={12}>
               <input
                 id="title"
                 className="label"
@@ -121,7 +145,7 @@ const Editor = ({ data, setdata, update_note, delete_note }) => {
                 {isEditing ? "Edit" : "Save"}
               </button>
             </Grid>
-            <Grid item lg={6} sm={12}>
+            <Grid item lg={6} md={6}  sm={12}>
               <div className="upper-buttons">
               <button className="action-button" onClick={update_note}>
                 Save changes

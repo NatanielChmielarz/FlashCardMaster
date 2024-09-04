@@ -8,9 +8,7 @@ import { fetchNote, updateNote,deleteNote } from "../api";
 import { useParams, useNavigate } from "react-router-dom";
 import React, { useCallback, useMemo, useRef, useState, useEffect } from "react";
 const notes = ( ) =>{
-  const [value, setValue] = useState("");
-  const [title, setTitle] = useState("");
-  const [Flashcards, setFlashcards] = useState(0)
+
   const [noteData, setNoteData] = useState(
     {
       title: "",
@@ -57,10 +55,10 @@ const notes = ( ) =>{
   return(
     <Layout>
     <Grid container>
-    <Grid item lg={8}>
+    <Grid item lg={8} md={12}>
        <Editor data={noteData} setdata={setNoteData} update_note={sendUpdate} delete_note={handleDelete} id={id}/>
     </Grid>
-    <Grid item lg={4}>
+    <Grid item lg={4} md={12}>
        <Flashcardmenu id={id} flashcards={noteData.flashcards_count}/>
     </Grid>
     </Grid></Layout>

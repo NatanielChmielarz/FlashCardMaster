@@ -9,7 +9,6 @@ html {
 
 body {
   background-color: #AFCEFD;
-  height: 100vh; /* Upewnia się, że tło obejmuje całe okno przeglądarki */
   margin: 0; /* Usuwa domyślne marginesy */
 }
 
