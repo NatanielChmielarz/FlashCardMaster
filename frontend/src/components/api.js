@@ -175,7 +175,6 @@ export const createNote = async () => {
       },
     });
     console.log("Note created successfully:", response.data);
-    window.location.reload();
   } catch (error) {
     console.error("Error creating note:", error);
   }

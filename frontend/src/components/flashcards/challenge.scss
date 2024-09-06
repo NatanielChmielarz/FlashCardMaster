@@ -13,24 +13,44 @@
         text-transform: uppercase;
         border-radius: 0.25rem;
         color: #EDEDFE;
-        background-color: #5155C3;
+        background-color: #2A966F;
         border-radius: 6px;
     }
+    button:hover{
+        background-color: #b3d7cc;
+    }
+}
+.summary{
+    span{color:#26253B;}
+    
 }
 .ChallengeHeader{
-    padding: 40px 20px;
-    border: 1px solid #ccc;
-    background: #EDEDFE;
-    border-radius: 5px;
+    padding: 45px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+    min-height: 600px;
+    background: #E9F4F0;
+    border-radius: 90px;
+    text-align: center;
+    h1{
+        font-size: 45px;
+        font-weight: 600;
+        color:#26253B;
+    }
     button{
-        margin-top: 20px;
-        margin-right: 10px;
+        width: 30%;
+        margin:10px auto ;
         padding: 1rem 2rem;
         font-weight: 600;
         text-transform: uppercase;
         border-radius: 0.25rem;
         color: #EDEDFE;
-        background-color: #5155C3;
+        background-color: #2A966F;
         border-radius: 6px;
+    }
+    button:hover{
+        background-color: #b3d7cc;
     }
 }

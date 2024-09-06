@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Modal from '../modal/modal';
 import { CreateFlashCard} from '../api'
 import { useNavigate } from "react-router-dom";
-const flashcardmenu = ({id,flashcards})=>{
+const flashcardmenu = ({color,id,flashcards})=>{
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();;
   const handleShowModal = () => {
@@ -18,12 +18,12 @@ const flashcardmenu = ({id,flashcards})=>{
         <div className="Flashcard_menu">
         <h1>Flashcard Menu</h1>
         <p>Ilość fiszek w tej lekcji : {flashcards ? flashcards : "0"}</p>
-        <button className="button" onClick={()=>{navigate(`/notes/${id}/FlashcardChallenge`)}}> Wyzwanie fiszek</button>
+        <button className="button" style={{"backgroundColor":color?color:""}} onClick={()=>{navigate(`/notes/${id}/FlashcardChallenge`)}}> Wyzwanie fiszek</button>
         <div>
-      <button className="button" onClick={handleShowModal}>Dodaj fiszke</button>
+      <button className="button" style={{"backgroundColor":color?color:""}} onClick={handleShowModal}>Dodaj fiszke</button>
       <Modal show={showModal} handleClose={handleCloseModal} handleSave={CreateFlashCard} NotesId={id} IsEditing={true} />
     </div>
-        <button className="button" onClick={()=>{navigate(`/notes/${id}/Flashcards`)}}>Edytuj fiszki</button>
+        <button className="button" style={{"backgroundColor":color?color:""}} onClick={()=>{navigate(`/notes/${id}/Flashcards`)}}>Edytuj fiszki</button>
         </div>
     )
 

@@ -14,6 +14,7 @@ const Item = ({ title, id }) => {
             strokeWidth={1.5}
             stroke="currentColor"
             className="icon"
+            color="#ffffff"
           >
             <path
               strokeLinecap="round"

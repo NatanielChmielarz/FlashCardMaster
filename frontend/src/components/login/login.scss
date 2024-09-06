@@ -5,11 +5,11 @@
   padding: 2rem;
   margin: 0 auto;
   border-radius: 0.5rem;
-  -webkit-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
--moz-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
-  background: #EDEDFE;
-  color: rgb(16, 16, 16);
+//   -webkit-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
+// -moz-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
+// box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
+  background: #E9F4F0;
+  color: #26253B;
 }
   
   .controls {
@@ -17,7 +17,7 @@ box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 1.5rem;
-  }
+  
   
   .controls label {
     display: block;
@@ -33,8 +33,8 @@ box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
     width: 100%;
     padding: 0.75rem 1rem;
     line-height: 1.5;
-    background-color: #fff;
-    color: #1D1b26;
+    background-color: #F4F3FA;
+    color: #26253B;
     border: 1px solid transparent;
     border-radius: 0.25rem;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -64,16 +64,12 @@ box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
     text-transform: uppercase;
     border-radius: 0.25rem;
     color: #EDEDFE;
-    background-color: #5155C3;
+    background-color: #6B66DA;
     border-radius: 6px;
     border: none;
-}
-  
-.button:hover {
-    background-color: #5e5de8;
-}
-  
-.text-button {
+    .button:hover {
+    background-color: #b3d7cc !important;
+}.text-button {
     color: #1D1b26;
     border: none;
     display: flex;
@@ -81,5 +77,9 @@ box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
 }
   
 .text-button:hover {
-    color: #5e5de8;
+    color: #b3d7cc;
+}}
 }
+  
+
+  

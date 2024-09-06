@@ -30,19 +30,24 @@ const Challenge = () => {
 
   const handleNextCard = (isCorrect) => {
     if (isCorrect) {
-      setCorrectCounter(correctCounter + 1);
+      setCorrectCounter((prevCorrect) => prevCorrect + 1);
     }
-    setClickCounter(clickCounter + 1);
+    setClickCounter((prevClicks) => prevClicks + 1);
 
-    if (currentIndex < flashcardsData.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      setIsChallenge(false);
-        setSummary(
-        <div>
-            <h1>Congratulations!</h1>
-        <span>You got {correctCounter+1}/{ flashcardsData.length} correct answers</span>
-        </div>)
+  // Move to the next card if there are more left
+  if (currentIndex < flashcardsData.length - 1) {
+    setCurrentIndex((prevIndex) => prevIndex + 1);
+  } else {
+    // If no cards left, display the summary
+    setIsChallenge(false);
+    setSummary(
+      <div className="summary">
+        <h1>Congratulations!</h1>
+        <span>
+          You got {correctCounter + (isCorrect ? 1 : 0)}/{flashcardsData.length} correct answers
+        </span>
+      </div>
+    );
     }
   };
 

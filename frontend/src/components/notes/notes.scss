@@ -1,10 +1,10 @@
 .wrapper {
     padding: 3rem 3rem;
-    border-radius: 0.5rem;
-    -webkit-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
-  -moz-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
-  box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
-    background: #EDEDFE;
+    border-radius: 45px;
+  //   -webkit-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
+  // -moz-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
+  // box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
+    background: #E9F4F0;
     height: 100%;
     span{
       margin:0
@@ -25,12 +25,12 @@
       flex: 1; /* Rozciągnij etykietę, aby zajmowała dostępną przestrzeń */
       padding: 8px;
       margin-right: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid #2A966F;
       border-radius: 4px;
     }
     .delete-button {
       padding: 8px 16px;
-      background-color: #e53935; /* czerwony kolor */
+      background-color: #F84F39; /* czerwony kolor */
       color: #fff;
       border: none;
       border-radius: 4px;
@@ -44,7 +44,7 @@
       padding: 8px 16px;
       margin-right: 10px;
       margin-top: 10px;
-      background-color: #5155c3;
+      background-color: #2A966F;
       color: #fff;
       border: none;
       border-radius: 4px;
@@ -52,7 +52,7 @@
     }
     
     .action-button:hover {
-      background-color: #3a3d99;
+      background-color: #b3d7cc;
     }
   }
   @media (max-width: 746px)

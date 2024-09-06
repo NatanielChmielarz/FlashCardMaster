@@ -1,3 +1,7 @@
 from django.test import TestCase
+from user_app.models import User
+from core.models import Notes
 
-# Create your tests here.
+
+class ModelTest(TestCase):
+    pass

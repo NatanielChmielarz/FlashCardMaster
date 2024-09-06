@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getEvents, deleteEvent, mark_as_completed, createEvent } from "../api";
-import "./EventList.scss";
+import "./calendar.scss";
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
@@ -73,19 +73,20 @@ const EventList = () => {
           onChange={(e) => setDate(e.target.value)}
           required
         />
-        <button type="submit">Add Event</button>
+        <button type="submit">Add</button>
       </form>
       <ul>
         {events.map((event) => (
-          <li key={event.id}>
+          <li  key={event.id}>
             <span>
               {event.title} - {event.date}
             </span>
+            <div className="Event_Element">
             <button onClick={() => handleMarkAsCompleted(event.id)}>
               {event.is_active ? "Mark as Completed": "Unmark as Completed" }
               
             </button>
-            <button onClick={() => handleDeleteEvent(event.id)}>Delete</button>
+            <button onClick={() => handleDeleteEvent(event.id)}>Delete</button></div>
           </li>
         ))}
       </ul>

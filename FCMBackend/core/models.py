@@ -21,3 +21,22 @@ class Events(models.Model):
     is_active = models.BooleanField(default=True,blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_events')
     
+class Friendship(models.Model):
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendship_sent')
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendship_received')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.from_user.username} is friends with {self.to_user.username}"
+
+    class Meta:
+        unique_together = ('from_user', 'to_user')
+        
+class SharedNote(models.Model):
+    note = models.ForeignKey(Notes, on_delete=models.CASCADE, related_name='shared_notes')
+    shared_with = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shared_with_me')
+    shared_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shared_by_me')
+    shared_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.shared_by.username} shared '{self.note.title}' with {self.shared_with.username}"

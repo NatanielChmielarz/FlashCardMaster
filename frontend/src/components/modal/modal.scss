@@ -19,12 +19,13 @@
   }
   
   .modal-content {
-    background-color: #fefefe;
+    background-color: #E9F4F0;
     margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
     border-radius: 5px;
+    
   }
   
   .close {
@@ -54,15 +55,18 @@
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;
+    margin: 0 auto;
     color: #fff;
-    background-color: #5155c3;
+    background-color: #2A966F;
     border: none;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
     cursor: pointer;
   }
   
   .button:hover {
-    background-color: #3a3d99;
+    background-color: #E9F4F0;
   }
   .picker-container {
     display: flex;
@@ -72,6 +76,12 @@
     padding: 20px;
     border-radius: 10px;
     margin: auto;
+
+    h1{
+      font-size: 45px;
+      font-weight: 600;
+      color:#26253B;
+  }
   }
   
   .emoji-label {

@@ -62,6 +62,7 @@ export default function AuthInputs() {
     <Header/>
     
     <div id="login-inputs">
+    
       <div className="controls">
         <p>
           <label>Email</label>

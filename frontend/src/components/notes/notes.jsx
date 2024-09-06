@@ -59,7 +59,7 @@ const notes = ( ) =>{
        <Editor data={noteData} setdata={setNoteData} update_note={sendUpdate} delete_note={handleDelete} id={id}/>
     </Grid>
     <Grid item lg={4} md={12}>
-       <Flashcardmenu id={id} flashcards={noteData.flashcards_count}/>
+       <Flashcardmenu color={"#2A966F"} id={id} flashcards={noteData.flashcards_count}/>
     </Grid>
     </Grid></Layout>
   )

@@ -37,10 +37,6 @@ const Flashcards = () => {
     fetchData(); // Wywołaj funkcję fetchData po zamontowaniu komponentu
   }, []);
 
-  const handleEdit = (id) => {
-    // Obsługa edycji flashcard
-    console.log("Edytuj flashcard o id:", id);
-  };
 
   const handleDelete = async (id) => {
     try {
@@ -98,7 +94,7 @@ const Flashcards = () => {
                         Delete
                       </button>
                     </div>
-                    {/* Tutaj możesz dodać inne informacje związane z flashcard */}
+            
                   </div>
                   ))}
       
