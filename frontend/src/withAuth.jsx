@@ -9,24 +9,38 @@ const withAuth = (WrappedComponent) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
+      let isMounted = true;
+    
       const verifyToken = async () => {
         try {
           await verifyAccessToken();
-          setIsAuthenticated(true);
+          if (isMounted) {
+            setIsAuthenticated(true);
+          }
         } catch (error) {
           try {
             await refreshAccessToken();
-            setIsAuthenticated(true);
+            if (isMounted) {
+              setIsAuthenticated(true);
+            }
           } catch (error) {
             clearTokens();
-            navigate('/login');
+            if (isMounted) {
+              navigate('/login');
+            }
           }
         } finally {
-          setIsLoading(false); // Ustawienie isLoading na false, gdy proces weryfikacji się zakończy
+          if (isMounted) {
+            setIsLoading(false);
+          }
         }
       };
-
+    
       verifyToken();
+    
+      return () => {
+        isMounted = false;
+      };
     }, [navigate]);
 
     if (isLoading) {

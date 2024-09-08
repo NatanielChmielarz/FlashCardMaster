@@ -45,13 +45,11 @@ export default function AuthInputs() {
         password: data.password,
       })
       .then(response => {
-        console.log('Logowanie udane:', response.data);
         localStorage.setItem('accessToken', response.data.access);
         localStorage.setItem('refreshToken', response.data.refresh);
         navigate('/'); // Przekierowanie po udanym logowaniu
       })
       .catch(error => {
-        console.error('Błąd logowania:', error);
         setErrors({ password: 'Invalid email or password' });
       });
     }

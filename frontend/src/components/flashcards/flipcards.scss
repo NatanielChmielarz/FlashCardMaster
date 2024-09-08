@@ -42,12 +42,12 @@
         padding-bottom: 20px;
       }
       .flip-card-front {
-        background: #EDEDFE;
-        color: black;
+        background: #F3F2FA;
+        color: #6B66DA;
       }
       .flip-card-back {
-        background-color: #2980b9;
-        color: white;
+        background-color: #6B66DA;
+        color: #F3F2FA;
         transform: rotateY(180deg);
       }
     }

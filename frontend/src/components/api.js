@@ -203,7 +203,7 @@ export const createEvent = async (eventData) => {
 export const getEvents = async (filter) => {
   try {
     const accessToken = localStorage.getItem("accessToken");
-    let url = 'http://127.0.0.1:8000/events/';
+    let url = 'https://flash-card-master-backend.vercel.app/events/';
     
     if (filter === 'active') {
       url += '?is_active=true';
@@ -228,7 +228,7 @@ export const updateEvent = async (id, eventData) => {
     const accessToken = localStorage.getItem("accessToken");
 
     const response = await axios.put(
-      `http://127.0.0.1:8000/events/${id}/`,
+      `https://flash-card-master-backend.vercel.app/events/${id}/`,
       eventData,
       {
         headers: {
@@ -247,7 +247,7 @@ export const mark_as_completed = async (id) => {
     const accessToken = localStorage.getItem("accessToken");
 
     const response = await axios.post(
-      `http://127.0.0.1:8000/events/${id}/mark_as_completed/`,
+      `https://flash-card-master-backend.vercel.app/events/${id}/mark_as_completed/`,
       {},
       {
         headers: {
@@ -266,7 +266,7 @@ export const deleteEvent = async (id) => {
     const accessToken = localStorage.getItem("accessToken");
 
     await axios.delete(
-      `http://127.0.0.1:8000/events/${id}/`,
+      `https://flash-card-master-backend.vercel.app/events/${id}/`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
