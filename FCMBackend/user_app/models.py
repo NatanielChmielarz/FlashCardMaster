@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 import re
+from django.utils.timezone import now
+from datetime import timedelta
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 class UserManager(BaseUserManager):
     def create_user(self,email,username,password=None):
@@ -64,3 +66,11 @@ class User(AbstractBaseUser):
         return self.email
     def has_perm(self, perm, obj=None):
         return self.is_admin
+
+class PasswordResetToken(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=64, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        return now() < self.created_at + timedelta(minutes=10)

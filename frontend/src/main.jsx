@@ -9,6 +9,8 @@ import Challenge from './components/flashcards/challenge.jsx';
 import Profile from './components/profile/profile.jsx';
 import Root from './App.jsx';
 import Callendar from './components/calendar/calendar.jsx';
+import Password_reset from './components/password_reset/password_reset.jsx';
+import Change_password from './components/password_reset/change_password.jsx';
 import './index.css';
 import {
     createBrowserRouter,
@@ -53,6 +55,17 @@ import {
       {
         path: "/Profile",
         element: <Profile/>,
+      },
+      {
+        path: "*",
+        element: <Dashboard/>,
+      },
+      {
+        path:"/Password_reset",
+        element: <Password_reset/>,
+      },{
+        path: "/Change_password",
+        element: <Change_password/>,
       }
    
 

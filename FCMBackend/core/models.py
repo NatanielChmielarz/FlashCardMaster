@@ -15,12 +15,18 @@ class Flashcards(models.Model):
     question = models.CharField(max_length=200)
     answer = models.CharField(max_length=200)
 
+class Tabs(models.Model):
+    name = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tabs')
+    notes = models.ManyToManyField(Notes, related_name='tabs') 
+
 class Events(models.Model):
     title = models.CharField(max_length=80)
     date = models.DateField()
     is_active = models.BooleanField(default=True,blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_events')
     
+
 class Friendship(models.Model):
     from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendship_sent')
     to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendship_received')

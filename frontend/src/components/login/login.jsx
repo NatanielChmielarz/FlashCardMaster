@@ -91,6 +91,9 @@ export default function AuthInputs() {
         <NavLink to={'/register'}type="button" className="text-button">
           Create a new account
         </NavLink>
+        <NavLink to={'/Password_reset'}type="button" className="text-button">
+          Forget your password?
+        </NavLink>
         
       </div>
     </div></>
