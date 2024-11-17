@@ -1,0 +1,48 @@
+$primary-color: #43c6ac;
+$secondary-color: #ffffff;
+$background-color: #f4f4f4;
+$font-family: "Arial", sans-serif;
+
+.auth-layout {
+  height: 85vh;
+  background-color: $background-color;
+  font-family: $font-family;
+
+  margin: 0 auto;
+    width: 80%;
+  .left-panel {
+    background: url('../../assets/login_background.jpg') no-repeat center center;
+    background-size: cover;
+    color: $secondary-color;
+    height: 85vh;
+    text-align: center;
+    padding: 20px;
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    a {
+      color: $secondary-color;
+      text-decoration: underline;
+      font-size: 1rem;
+    }
+  }
+
+  .right-panel {
+    background-color: $secondary-color;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    height: 85vh;
+   
+
+   
+  }
+}

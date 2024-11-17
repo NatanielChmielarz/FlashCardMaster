@@ -1,85 +1,138 @@
-#login-inputs {
-  margin-top: 5% !important;
-  width: 100%;
-  max-width: 28rem;
-  padding: 2rem;
-  margin: 0 auto;
-  border-radius: 0.5rem;
-//   -webkit-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
-// -moz-box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
-// box-shadow: 0px 0px 35px -1px rgba(153, 185, 247, 1);
-  background: #E9F4F0;
-  color: #26253B;
+$primary-color: #43c6ac;
+$secondary-color: #ffffff;
+$background-color: #f4f4f4;
+$button-hover: darken($primary-color, 10%);
+$font-family: "Arial", sans-serif;
+
+.welcome {
+  text-align: center;
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+
+  p {
+    margin-bottom: 40px;
+    font-size: 1rem;
+  }
+.register_button{
+  margin-top: 30px;
 }
-  
-  .controls {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  
-  
-  .controls label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.75rem;
+  .btn-signin {
+    margin-top: 15px;
+    background-color: transparent;
+    color: $secondary-color;
+    border: 2px solid $secondary-color;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: $secondary-color;
+      color: $primary-color;
+    }
+  }
+}
+
+.error {
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: gray;
+}
+
+.create-account {
+  max-width: 300px;
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #1D1b26;
+    text-align: center;
+    color: $primary-color;
   }
-  
-  .controls input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    line-height: 1.5;
-    background-color: #F4F3FA;
-    color: #26253B;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  }
-  
-  label.invalid {
-    color: #f87171;
-  }
-  
-  input.invalid {
-    color: #ef4444;
-    border-color: #f73f3f;
-    background-color: #fed2d2;
-  }
-  
-  .actions {
+
+  .social-icons {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .button {
-    padding: 1rem 2rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    border-radius: 0.25rem;
-    color: #EDEDFE;
-    background-color: #6B66DA;
-    border-radius: 6px;
-    border: none;
-    .button:hover {
-    background-color: #b3d7cc !important;
-}.text-button {
-    color: #1D1b26;
-    border: none;
-    display: flex;
-    align-items: center;
-}
-  
-.text-button:hover {
-    color: #b3d7cc;
-}}
-}
-  
+    gap: 10px;
+    margin-bottom: 20px;
 
-  
+    .social-btn {
+      background-color: $primary-color;
+      color: $secondary-color;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $button-hover;
+      }
+    }
+  }
+
+  p {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: gray;
+  }
+
+  .control {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .input-field {
+      padding: 10px;
+      width: 100%;
+      border: 1px solid lightgray;
+      border-radius: 5px;
+      font-size: 1rem;
+
+      &.invalid {
+        border-color: red;
+      }
+    }
+
+    .password_reset {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+
+      .text-button {
+        color: $primary-color;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: color 0.3s;
+
+        &:hover {
+          text-decoration: underline;
+          color: $button-hover;
+        }
+      }
+    }
+
+    .btn-signup {
+      background-color: $primary-color;
+      color: $secondary-color;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $button-hover;
+      }
+    }
+  }
+}

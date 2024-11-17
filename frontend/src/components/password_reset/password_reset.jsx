@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { sendPasswordReset } from "../api";
+import "./password_rest.scss"
 const Password_reset = () =>{
     const [email,setEmail] = useState("")
     const handle_email_change = (e) => {
@@ -16,7 +17,7 @@ const Password_reset = () =>{
     }
     return (
         <>
-        <div>
+        <div className="password-reset-container">
             <h1>Password Reset</h1>
             <p>Please enter your email address below to reset your password.</p>
             

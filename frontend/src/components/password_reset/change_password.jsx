@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { resetPassword } from "../api";
-
+import "./password_rest.scss";
 const ChangePassword = () => {
   const [formData, setFormData] = useState({ password: "", confirmPassword: "" });
   const [error, setError] = useState("");
