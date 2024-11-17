@@ -278,3 +278,29 @@ export const deleteEvent = async (id) => {
     throw error;
   }
 };
+
+export const sendPasswordReset = async (email) =>{
+  try {
+    const response = await axios.post(
+      "https://flash-card-master-backend.vercel.app/account/password_reset/",
+      {"email":email }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error sending password reset email:", error);
+    throw error;
+  }
+}
+
+export const resetPassword = async ( token, password) =>{
+  try {
+    const response = await axios.post(
+      "https://flash-card-master-backend.vercel.app/account/password_reset/",
+      { token, password }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    throw error;
+  }
+}

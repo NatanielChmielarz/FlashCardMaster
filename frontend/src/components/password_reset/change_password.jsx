@@ -1,47 +1,94 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-const change_password = () =>{
-    const [data,setData] = useState({ password:"",confirmPassword:""})
-    const [error,setErrors] = useState("")
-    const location = useLocation();
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { resetPassword } from "../api";
 
-    // Pobierz parametry zapytania z URL
-    const queryParams = new URLSearchParams(location.search);
-    const token = queryParams.get("token");
-  function handleInputChange(identifier, value) {
-    setData(prevData => ({
+const ChangePassword = () => {
+  const [formData, setFormData] = useState({ password: "", confirmPassword: "" });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+
+  
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
       ...prevData,
-      [identifier]: value,
+      [name]: value,
     }));
-  }
-  function handle_sumbit(){
-    if(data.password!==data.confirmPassword){
-        setErrors("Passwords do not match")
-        setErrors(token)
-    } else{
-        // Make API call to change password here
-        console.log("Password changed successfully")
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+    setError("");
+    setIsLoading(true);
+    const token = new URLSearchParams(location.search).get("token");
+    if (!token) {
+      setError("Invalid token");
+      setIsLoading(false);
+      return;
     }
-  }
-    return (
 
-        <>
-        <p>Enter new password</p>
-        <input
-            type="password"
-            value={data.password}
-            onChange={(event) => handleInputChange('password', event.target.value)}
-          />
-        <p>Confirm new password</p>
-        <input
-            type="password"
-            value={data.confirmPassword}
-            onChange={(event) => handleInputChange('confirmPassword', event.target.value)}
-          />
-        <button onClick={handle_sumbit}>Change Password</button>
-        <p>{error} </p>
-        </>
-    )
-}
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      setIsLoading(false);
+      return;
+    }
 
-export default change_password;
+    try {
+      const response = await resetPassword(token,formData.password );
+      
+      if (response.ok) {
+        navigate("/login", { state: { message: "Password changed successfully" } });
+      } else {
+        
+        setError(response.message || "An error occurred while resetting the password");
+      }
+    } catch (error) {
+      console.error("Password reset error:", error);
+      setError("Network error or server is unreachable. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="change-password-container">
+      <h2>Reset Password</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="password">New Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            required
+            minLength={8}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="confirmPassword">Confirm New Password:</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleInputChange}
+            required
+            minLength={8}
+          />
+        </div>
+       
+        <button type="submit" disabled={isLoading} onClick={handleSubmit}>
+          {isLoading ? "Changing Password..." : "Change Password"}
+        </button>
+        {error && <p className="error-message">{error}</p>}
+      </form>
+    </div>
+  );
+};
+
+export default ChangePassword;
