@@ -36,8 +36,8 @@ class PasswordResetAPIView(APIView):
     permission_classes = []
     def post(self, request, *args, **kwargs):
         if 'email' in request.data:  # Obsługa żądania wysyłania e-maila resetującego
-            email = request.data.get('email').lower()
-        
+            email = request.data.get('email')
+            print(email)
             try:
                 user = User.objects.get(email=email)
                 token = secrets.token_hex(32)
