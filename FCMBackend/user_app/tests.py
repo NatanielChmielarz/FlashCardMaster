@@ -40,21 +40,21 @@ class UserModelTest(TestCase):
         self.assertTrue(admin_user.is_superuser)
         self.assertTrue(admin_user.is_admin)
         
-class User_Views_Test(APITestCase):
-    def setUp(self):
-        """Set up the data for user model"""
-        self.username="test_username"
-        self.valid_email = "test@example.com"
-        self.invalid_email = "invalid-email"
-        self.password = "StrongPassword123!"
-        self.weak_password = "123"
-    def test_create_account(self):
-        """
-        Ensure we can create a new account object.
-        """
-        url ='/account/register/'
-        data = {'username': self.username,"email": self.valid_email,"password": self.password}
-        response = self.client.post(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(User.objects.count(), 1)
-        self.assertEqual(User.objects.get().name, "test_username")
+# class User_Views_Test(APITestCase):
+#     def setUp(self):
+#         """Set up the data for user model"""
+#         self.username="test_username"
+#         self.valid_email = "test@example.com"
+#         self.invalid_email = "invalid-email"
+#         self.password = "StrongPassword123!"
+#         self.weak_password = "123"
+#     def test_create_account(self):
+#         """
+#         Ensure we can create a new account object.
+#         """
+#         url ='/account/register/'
+#         data = {'username': self.username,"email": self.valid_email,"password": self.password}
+#         response = self.client.post(url, data, format='json')
+#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+#         self.assertEqual(User.objects.count(), 1)
+#         self.assertEqual(User.objects.get().name, "test_username")

@@ -114,6 +114,7 @@ export default function AuthInputs() {
   return (
     <>
       <Header />
+     
       <AuthLayout leftContent={leftcontent} rightContent={rightcontent} />
     </>
   );
