@@ -66,9 +66,9 @@ class FilterNotesView(APIView):
             return Response({"error": "Keyword must be at least 3 characters long."}, status=status.HTTP_400_BAD_REQUEST)
 
         notes = Notes.objects.filter(user=user, content__icontains=keyword)
-
-        data = [{"id":notes.id,"title":notes.title}]
-        return Response({"notes_ids": data}, status=status.HTTP_200_OK)
+        fields = ['id','title']
+        notes_ids = notes.values_list( *fields)
+        return Response({"notes_ids": list(notes_ids)}, status=status.HTTP_200_OK)
 
 class FriendRequestListView(generics.ListAPIView):
     serializer_class = FriendRequestSerializer
