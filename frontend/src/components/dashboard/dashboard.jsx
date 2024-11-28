@@ -3,7 +3,12 @@ import Grid from "@mui/material/Grid";
 import { NavLink } from "react-router-dom";
 import withAuth from "../../withAuth.jsx";
 import Layout from "../layout/layout";
-import { fetchData, createNote, getEvents,SearchNoteByKeyword } from "../api.js";
+import {
+  fetchData,
+  createNote,
+  getEvents,
+  SearchNoteByKeyword,
+} from "../api.js";
 import Item from "./item";
 import "./dashboard.scss";
 import Box from "./box";
@@ -13,18 +18,27 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   const [events, setEvents] = useState([]);
-  const [keywordSearch,setkeywordSearch] = useState(null)
-  const [keyword,setkeyword]=useState("")
-  const getSerchData = async ()=>{
+  const [keywordSearch, setkeywordSearch] = useState([]);
+  const [keyword, setkeyword] = useState("");
+  const getSerchData = async () => {
     try {
-      const data = await SearchNoteByKeyword(keyword)
-      if (data){
-        setkeywordSearch(data)
+      const response = await SearchNoteByKeyword(keyword); // Oczekujemy, że odpowiedź zawiera obiekt z polem 'notes_ids'
+
+      if (response && response.notes_ids && Array.isArray(response.notes_ids)) {
+        // Przekształcamy tablicę notes_ids na tablicę obiektów
+        const formattedData = response.notes_ids.map((item) => ({
+          id: item[0], // item[0] to id
+          title: item[1], // item[1] to title
+        }));
+        setkeywordSearch(formattedData); // Ustawiamy dane w stanie
+      } else {
+        setkeywordSearch([]); // Jeśli nie ma wyników, ustaw pustą tablicę
       }
     } catch (error) {
-      
+      console.error("Błąd podczas wyszukiwania:", error);
+      setkeywordSearch([]); // Jeśli wystąpił błąd, ustaw pustą tablicę
     }
-  }
+  };
   const getData = async () => {
     try {
       const data = await fetchData();
@@ -50,9 +64,9 @@ const Dashboard = () => {
     setSearchTerm(e.target.value);
     setCurrentPage(1); // Reset to first page when searching
   };
-  const handleKeywordChange= (e) =>{
-    setkeyword(e.target.value)
-  }
+  const handleKeywordChange = (e) => {
+    setkeyword(e.target.value);
+  };
   // Filter and paginate items
   const filteredItems = value
     ? value.filter((item) =>
@@ -73,7 +87,7 @@ const Dashboard = () => {
   return (
     <Layout>
       <Box
-      nth={"first"}
+        nth={"first"}
         Text={"Upcoming events"}
         leftcolor={["#F3F2FA", "#6B66DA"]}
         rightcolor="#6B66DA"
@@ -82,9 +96,9 @@ const Dashboard = () => {
           {events.length > 0 ? (
             <div>
               {events.map((event) => (
-                <p key={event.id} >
-                  <span >
-                    <strong >{event.title}</strong> - {event.date}
+                <p key={event.id}>
+                  <span>
+                    <strong>{event.title}</strong> - {event.date}
                   </span>
                 </p>
               ))}
@@ -95,83 +109,94 @@ const Dashboard = () => {
         </div>
       </Box>
 
-      <Box nth={"second"} Text={"Notes"} leftcolor={["#FEEDEB", "#F84F39"]} rightcolor="#F84F39">
-      <div className="content-box dynamic-height">
-        <div className="notes-bar">
-          <div className="input-box">
-            <input
-              type="search"
-              name="search-form"
-              id="search-form"
-              className="search-input"
-              onChange={handleSearchChange}
-              value={searchTerm}
-              placeholder="Search notes.."
-            />
-          </div>
-          <button
-            className="button"
-            onClick={async () => {
-              await createNote();
-              getData();
-            }}
-          >
-            Add new note
-          </button>
-        </div>
-        <div className="itemList">
-          {paginatedItems.map((element) => (
-            <div key={element.id}>
-            <Item title={element.title} id={element.id} />
+      <Box
+        nth={"second"}
+        Text={"Notes"}
+        leftcolor={["#FEEDEB", "#F84F39"]}
+        rightcolor="#F84F39"
+      >
+        <div className="content-box dynamic-height">
+          <div className="notes-bar">
+            <div className="input-box">
+              <input
+                type="search"
+                name="search-form"
+                id="search-form"
+                className="search-input"
+                onChange={handleSearchChange}
+                value={searchTerm}
+                placeholder="Search notes.."
+              />
             </div>
-          ))}
-        </div>
-
-        
-        {totalPages > 1 && (
-          <div className="pagination">
             <button
-              disabled={currentPage === 1}
-              onClick={() => handlePageChange(currentPage - 1)}
+              className="button"
+              onClick={async () => {
+                await createNote();
+                getData();
+              }}
             >
-              Previous
-            </button>
-           
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              Next
+              Add new note
             </button>
           </div>
-        )}
-      </div>
-    </Box>
-    <div className="filtering">
-        <h1>you cant find your notes?</h1>
-        <p>enter the keyword that you looking for!</p>
-        <input
-              type="search"
-              name="search-form"
-              id="search-form"
-              className="search-input"
-              onChange={handleKeywordChange}
-              value={keyword}
-              placeholder="find notes.."
-            />
-        
-          <button
-            className="button"
-            onClick={async () => {
-              await getSerchData()
-            }}
-          >
-            Search
-          </button>
-        <div className="elements">
-          
+          <div className="itemList">
+            {paginatedItems.map((element) => (
+              <div key={element.id}>
+                <Item title={element.title} id={element.id} />
+              </div>
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                Previous
+              </button>
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
-    </div>
+      </Box>
+      <div className="filtering">
+        <h1>Can't find your notes?</h1>
+        <p>Enter the keyword that you are looking for!</p>
+        <input
+          type="search"
+          name="search-form"
+          id="search-form"
+          className="search-input"
+          onChange={handleKeywordChange}
+          value={keyword}
+          placeholder="Find notes.."
+        />
+        <button
+          className="button"
+          onClick={async () => {
+            await getSerchData();
+          }}
+        >
+          Search
+        </button>
+        <div className="elements">
+          {keywordSearch.length > 0 ? (
+            keywordSearch.map((element) => (
+              <div key={element.id}>
+                <Item title={element.title} id={element.id} />
+              </div>
+            ))
+          ) : (
+            <div>No results found</div>
+          )}
+        </div>
+      </div>
     </Layout>
   );
 };

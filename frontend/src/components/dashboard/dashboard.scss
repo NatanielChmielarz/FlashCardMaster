@@ -137,3 +137,102 @@ span {
   font-size: 18px;
   color: #ffffff;
 }
+
+
+.filtering {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 30px;
+  background-color: #F84F39; /* Delikatne tło */
+  border-radius: 0px 0px 90px 90px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Lekki cień dla głębi */
+  
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #FEEDEB;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  p {
+    font-size: 18px;
+    color: #FEEDEB;
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .search-input {
+    padding: 12px 20px;
+    width: 280px;
+    border-radius: 50px;
+    border: 2px solid #e0e0e0;
+    margin-bottom: 20px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background-color: #fff;
+    
+    &:focus {
+      border-color: #6B66DA; /* Kolor przy fokusie */
+    }
+    
+    &::placeholder {
+      color: #aaa;
+      font-style: italic;
+    }
+  }
+
+  .button {
+    padding: 12px 30px;
+    background-color: #FEEDEB;
+    color: #F84F39;
+    border: none;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 30px;
+
+    &:hover {
+      background-color: #e1d0ce; /* Ciemniejszy odcień */
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(2px); /* Efekt kliknięcia */
+    }
+  }
+
+  .elements {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    div {
+      font-size: 18px;
+      color: #FEEDEB;
+      font-weight: 500;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .no-results {
+      color: #FEEDEB;
+      font-style: italic;
+    }
+  }
+ 
+}
+@media (max-width: 899px){
+  .filtering{
+    margin-top: -50px;
+  }
+}
