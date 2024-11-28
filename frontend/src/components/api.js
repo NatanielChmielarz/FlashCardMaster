@@ -304,3 +304,23 @@ export const resetPassword = async ( token, password) =>{
     throw error;
   }
 }
+
+export const SearchNoteByKeyword = async(keyword) => {
+  try {
+    const accessToken = localStorage.getItem("accessToken");
+  
+    await axios.get(
+      `https://flash-card-master-backend.vercel.app/notes/filter/?keyword=${keyword}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  } catch (error) {
+    console.error("Błąd pobierania danych:", error);
+    throw error;
+  }
+
+
+}

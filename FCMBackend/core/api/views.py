@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics
-from core.api.serializers import NotesSerializer, FlashcardSerializer
+from core.api.serializers import NotesSerializer, FlashcardSerializer,SharedNoteSerializer,FriendRequestSerializer,FriendshipSerializer
 from core.api.permision import UserOrReadOnly,IsNotesOwner
-from core.models import Notes , Flashcards
+from core.models import Notes , Flashcards,SharedNote,Friendship,FriendRequest
 from user_app.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import Response
@@ -56,7 +56,7 @@ class FlashcardDetailsView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsNotesOwner,IsAuthenticated] 
     
 class FilterNotesView(APIView):
-    permission_classes = [UserOrReadOnly,IsAuthenticated]
+    permission_classes = [IsNotesOwner,IsAuthenticated]
 
     def get(self, request):
         user = request.user  # Pobranie użytkownika z tokenu
@@ -65,12 +65,50 @@ class FilterNotesView(APIView):
         if len(keyword) < 3:
             return Response({"error": "Keyword must be at least 3 characters long."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Filtrowanie notatek użytkownika z keyword w content
         notes = Notes.objects.filter(user=user, content__icontains=keyword)
 
-        # Przygotowanie odpowiedzi z ID notatek
-        notes_ids = notes.values_list('id', flat=True)
-        return Response({"notes_ids": list(notes_ids)}, status=status.HTTP_200_OK)
+        data = [{"id":notes.id,"title":notes.title}]
+        return Response({"notes_ids": data}, status=status.HTTP_200_OK)
+
+class FriendRequestListView(generics.ListAPIView):
+    serializer_class = FriendRequestSerializer
+    permission_classes = [UserOrReadOnly,IsAuthenticated]
+    def get_queryset(self):
+        id = self.request.user.id
+        return FriendRequest.objects.filter(to_user=id, accepted=False)
+
+
+class FriendRequestCreateView(generics.CreateAPIView):
+    serializer_class = FriendRequestSerializer
+    permission_classes = [UserOrReadOnly,IsAuthenticated]
+    def get_queryset(self):
+        return super().get_queryset()
+    def perform_create(self, serializer):
+        # Ustawienie aktualnego użytkownika jako nadawcy
+        serializer.save(from_user=self.request.user)
+
+
+# Akceptowanie zaproszeń
+class FriendRequestAcceptView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        try:
+            friend_request = FriendRequest.objects.get(pk=pk, to_user=request.user, accepted=False)
+        except FriendRequest.DoesNotExist:
+            return Response({"error": "Zaproszenie nie istnieje lub już zostało zaakceptowane."},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        # Akceptowanie zaproszenia
+        friend_request.accepted = True
+        friend_request.save()
+
+        # Tworzenie wzajemnych relacji znajomości
+        Friendship.objects.create(user1=friend_request.from_user, user2=friend_request.to_user)
+        Friendship.objects.create(user1=friend_request.to_user, user2=friend_request.from_user)
+
+        return Response({"message": "Zaproszenie zaakceptowane!"}, status=status.HTTP_200_OK)    
+
     
     
 

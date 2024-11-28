@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import { NavLink } from "react-router-dom";
 import withAuth from "../../withAuth.jsx";
 import Layout from "../layout/layout";
-import { fetchData, createNote, getEvents } from "../api.js";
+import { fetchData, createNote, getEvents,SearchNoteByKeyword } from "../api.js";
 import Item from "./item";
 import "./dashboard.scss";
 import Box from "./box";
@@ -13,6 +13,18 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   const [events, setEvents] = useState([]);
+  const [keywordSearch,setkeywordSearch] = useState(null)
+  const [keyword,setkeyword]=useState("")
+  const getSerchData = async ()=>{
+    try {
+      const data = await SearchNoteByKeyword(keyword)
+      if (data){
+        setkeywordSearch(data)
+      }
+    } catch (error) {
+      
+    }
+  }
   const getData = async () => {
     try {
       const data = await fetchData();
@@ -38,7 +50,9 @@ const Dashboard = () => {
     setSearchTerm(e.target.value);
     setCurrentPage(1); // Reset to first page when searching
   };
-
+  const handleKeywordChange= (e) =>{
+    setkeyword(e.target.value)
+  }
   // Filter and paginate items
   const filteredItems = value
     ? value.filter((item) =>
@@ -65,7 +79,6 @@ const Dashboard = () => {
         rightcolor="#6B66DA"
       >
         <div className="Events-list">
-          {console.log(events)}
           {events.length > 0 ? (
             <div>
               {events.map((event) => (
@@ -134,6 +147,31 @@ const Dashboard = () => {
         )}
       </div>
     </Box>
+    <div className="filtering">
+        <h1>you cant find your notes?</h1>
+        <p>enter the keyword that you looking for!</p>
+        <input
+              type="search"
+              name="search-form"
+              id="search-form"
+              className="search-input"
+              onChange={handleKeywordChange}
+              value={keyword}
+              placeholder="find notes.."
+            />
+        
+          <button
+            className="button"
+            onClick={async () => {
+              await getSerchData()
+            }}
+          >
+            Search
+          </button>
+        <div className="elements">
+          
+        </div>
+    </div>
     </Layout>
   );
 };
