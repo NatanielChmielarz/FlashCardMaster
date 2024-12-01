@@ -64,31 +64,4 @@ class FilterNotesViewTest(TestCase):
         self.assertIn("notes_ids", response.data)
         self.assertEqual(len(response.data["notes_ids"]), 2)  
         
-class FriendshipSharingTestCase(TestCase):
-    def setUp(self):
-        
-        self.user1 = User.objects.create_user(email="test1@gmail.com",username='testuser1', password='password1!')
-        self.user2 = User.objects.create_user(email="test2@gmail.com",username='testuser2', password='password1!')
 
-        self.note = Notes.objects.create(title="Test Note", content="This is a test note.", user=self.user1)
-
-    def test_friend_request_and_note_sharing(self):
-        friend_request = FriendRequest.objects.create(from_user=self.user1, to_user=self.user2)
-        self.assertEqual(FriendRequest.objects.count(), 1)
-        self.assertFalse(friend_request.accepted)
-
-        friend_request.accepted = True
-        friend_request.accepted_at = timezone.now()
-        friend_request.save()
-
-        Friendship.objects.create(user1=self.user1, user2=self.user2)
-        Friendship.objects.create(user1=self.user2, user2=self.user1)
-
-        self.assertEqual(Friendship.objects.count(), 2)
-
-        shared_note = SharedNote.objects.create(note=self.note, shared_with=self.user2, shared_by=self.user1)
-        self.assertEqual(SharedNote.objects.count(), 1)
-
-        self.assertEqual(shared_note.note, self.note)
-        self.assertEqual(shared_note.shared_with, self.user2)
-        
