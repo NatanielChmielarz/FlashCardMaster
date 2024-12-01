@@ -8,6 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from django.db import IntegrityError
+from django.utils import timezone
 # Create your views here.
     
 class NotesListCreateView(generics.ListCreateAPIView):
@@ -81,12 +83,9 @@ class FriendRequestListView(generics.ListAPIView):
 class FriendRequestCreateView(generics.CreateAPIView):
     serializer_class = FriendRequestSerializer
     permission_classes = [UserOrReadOnly,IsAuthenticated]
-    def get_queryset(self):
-        return super().get_queryset()
-    def perform_create(self, serializer):
-        # Ustawienie aktualnego użytkownika jako nadawcy
-        serializer.save(from_user=self.request.user)
 
+    def perform_create(self, serializer):
+        serializer.save(from_user=self.request.user)
 
 # Akceptowanie zaproszeń
 class FriendRequestAcceptView(APIView):
@@ -94,6 +93,7 @@ class FriendRequestAcceptView(APIView):
 
     def post(self, request, pk):
         try:
+            # Znajdź zaproszenie wysłane do zalogowanego użytkownika, które nie zostało jeszcze zaakceptowane
             friend_request = FriendRequest.objects.get(pk=pk, to_user=request.user, accepted=False)
         except FriendRequest.DoesNotExist:
             return Response({"error": "Zaproszenie nie istnieje lub już zostało zaakceptowane."},
@@ -101,13 +101,34 @@ class FriendRequestAcceptView(APIView):
 
         # Akceptowanie zaproszenia
         friend_request.accepted = True
+        friend_request.accepted_at = timezone.now()
         friend_request.save()
 
         # Tworzenie wzajemnych relacji znajomości
-        Friendship.objects.create(user1=friend_request.from_user, user2=friend_request.to_user)
-        Friendship.objects.create(user1=friend_request.to_user, user2=friend_request.from_user)
+        try:
+            Friendship.objects.create(user1=friend_request.from_user, user2=friend_request.to_user)
+            Friendship.objects.create(user1=friend_request.to_user, user2=friend_request.from_user)
+        except IntegrityError:
+            # W przypadku duplikatu relacji znajomości
+            return Response({"error": "Relacja znajomości już istnieje."},
+                            status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({"message": "Zaproszenie zaakceptowane!"}, status=status.HTTP_200_OK)    
+        return Response({"message": "Zaproszenie zostało zaakceptowane!"}, status=status.HTTP_200_OK)  
+    
+class FriendRequestRejectView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, pk):
+        try:
+            # Znajdź zaproszenie skierowane do zalogowanego użytkownika
+            friend_request = FriendRequest.objects.get(pk=pk, to_user=request.user, accepted=False)
+        except FriendRequest.DoesNotExist:
+            return Response({"error": "Zaproszenie nie istnieje lub już zostało zaakceptowane."},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        # Usunięcie zaproszenia
+        friend_request.delete()
+        return Response({"message": "Zaproszenie zostało odrzucone i usunięte."}, status=status.HTTP_200_OK)
 
     
     
