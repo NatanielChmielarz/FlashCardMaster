@@ -129,7 +129,22 @@ class FriendRequestRejectView(APIView):
         # Usunięcie zaproszenia
         friend_request.delete()
         return Response({"message": "Zaproszenie zostało odrzucone i usunięte."}, status=status.HTTP_200_OK)
-
+    
+    
+    
+class FriendShipListView(generics.ListAPIView):
+    serializer_class = FriendshipSerializer
+    permission_classes = [UserOrReadOnly,IsAuthenticated]
+    def get_queryset(self):
+        id = self.request.user.id
+        return Friendship.objects.filter(user1=id)
+    
+class FriendShipDeleteView(generics.DestroyAPIView):
+    queryset = Friendship.objects.all()
+    lookup_field = 'id'
+    serializer_class = FriendshipSerializer
+    permission_classes = [UserOrReadOnly,IsAuthenticated]
+   
     
     
 

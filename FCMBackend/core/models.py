@@ -1,5 +1,6 @@
 from django.db import models
 from user_app.models import User
+from django.core.exceptions import ValidationError
 class Notes(models.Model):
     title = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_notes')
@@ -64,3 +65,15 @@ class SharedNote(models.Model):
 
     def __str__(self):
         return f"{self.shared_by.username} shared '{self.note.title}' with {self.shared_with.username}"
+    
+    def save(self, *args, **kwargs):
+        friendship_exists = Friendship.objects.filter(
+            user1=self.shared_by, user2=self.shared_with
+        ).exists() or Friendship.objects.filter(
+            user1=self.shared_with, user2=self.shared_by
+        ).exists()
+
+        if not friendship_exists:
+            raise ValidationError("You can only share notes with friends.")
+
+        super().save(*args, **kwargs)

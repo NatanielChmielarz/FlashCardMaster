@@ -2,7 +2,7 @@ from django.urls import path,include
 from user_app.api.views import SignupAPIView,PasswordResetAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from core.api.views import(  FriendRequestListView, 
-                            FriendRequestCreateView,  FriendRequestAcceptView, FriendRequestRejectView)
+                            FriendRequestCreateView,  FriendRequestAcceptView, FriendRequestRejectView,FriendShipListView,FriendShipDeleteView)
 app_name = 'authentication'
 urlpatterns = [
      path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -14,5 +14,7 @@ urlpatterns = [
      path('friend-requests/create/', FriendRequestCreateView.as_view(), name='friend-request-create'),
      path('friend-requests/accept/<int:pk>/', FriendRequestAcceptView.as_view(), name='friend-request-accept'),
      path('friend-requests/reject/<int:pk>/', FriendRequestRejectView.as_view(), name='friend-request-reject'),
+     path('friendships/', FriendShipListView.as_view(), name='friendship-list'),
+     path('friendships/<int:pk>/delete/', FriendShipDeleteView.as_view(), name='friendship-delete'),
      
 ]

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getEvents, deleteEvent, mark_as_completed, createEvent } from "../api";
+import { getEvents, deleteEvent, markAsCompleted, createEvent } from "../api";
 import "./calendar.scss";
 
 const EventList = () => {
@@ -32,7 +32,7 @@ const EventList = () => {
 
   const handleMarkAsCompleted = async (id) => {
     try {
-      await mark_as_completed(id);
+      await markAsCompleted(id);
       fetchEvents();
     } catch (error) {
       console.error("Error marking event as completed:", error);
