@@ -1,326 +1,269 @@
 import axios from "axios";
-export const UpdateFlashCard = async(id,flashcard) => {
-  try {
-    const accessToken = localStorage.getItem("accessToken");
 
-    const response =await axios.put(
-      `https://flash-card-master-backend.vercel.app/notes/flashcard/${id}/`,
-      flashcard,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    window.location.reload();
-    return response.data;
-    
-  } catch (error) {
-    console.error("Błąd pobierania danych:", error);
-    throw error;
+
+
+const api = axios.create({
+  baseURL: "https://flash-card-master-backend.vercel.app",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+api.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
+  return config;
+});
 
 
-}
-export const GetFlashCardDetails = async(id) => {
-  try {
-    const accessToken = localStorage.getItem("accessToken");
-    
-    const response =await axios.get(
-      `https://flash-card-master-backend.vercel.app/notes/flashcard/${id}/`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Błąd pobierania danych:", error);
-    throw error;
-  }
-
-
-}
-export const DeleteFlashCard = async(id) => {
-  try {
-    const accessToken = localStorage.getItem("accessToken");
-  
-    await axios.delete(
-      `https://flash-card-master-backend.vercel.app/notes/flashcard/${id}/`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-      window.location.reload();
-  } catch (error) {
-    console.error("Błąd pobierania danych:", error);
-    throw error;
-  }
-
-
-}
-export const CreateFlashCard = async (id, flashcard) => {
-  try {
-    const accessToken = localStorage.getItem("accessToken");
-  
-    const response =await axios.post(
-      `https://flash-card-master-backend.vercel.app/notes/${id}/flashcards`,
-      flashcard,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    window.location.reload();
-    return response.data;
-  } catch (error) {
-    console.error("Błąd pobierania danych:", error);
-    throw error;
-  }
-};
-export const fetchFlashCard = async (id) => {
-  try {
-    const accessToken = localStorage.getItem("accessToken");
- 
-    const response =await axios.get(
-      `https://flash-card-master-backend.vercel.app/notes/${id}/flashcards`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Błąd pobierania danych:", error);
-    throw error;
-  }
-};
+// Notes
 export const fetchNote = async (id) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
-    const response = await axios.get(`https://flash-card-master-backend.vercel.app/notes/${id}/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await api.get(`/notes/${id}/`);
     return response.data;
   } catch (error) {
-    console.error("Błąd pobierania danych:", error);
+    console.error("Error fetching note:", error.response?.data || error.message);
     throw error;
   }
 };
+
 export const fetchData = async () => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
-    const response = await axios.get("https://flash-card-master-backend.vercel.app/notes/", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await api.get(`/notes/`);
     return response.data;
   } catch (error) {
-    console.error("Błąd pobierania danych:", error);
+    console.error("Error fetching data:", error.response?.data || error.message);
     throw error;
   }
 };
+
 export const updateNote = async (id, title, content) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
-    await axios.put(
-      `https://flash-card-master-backend.vercel.app/notes/${id}/`,
-      { title, content },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-  } catch (error) {
-    console.error("Błąd aktualizacji danych:", error);
-    throw error;
-  }
-};
-export const deleteNote = async (id) => {
-  try {
-    const accessToken = localStorage.getItem("accessToken");
-    await axios.delete(
-      `https://flash-card-master-backend.vercel.app/notes/${id}/`,
-
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-  } catch (error) {
-    console.error("Błąd aktualizacji danych:", error);
-    throw error;
-  }
-};
-export const createNote = async () => {
-  const note = {
-    title: "Nowa notatka",
-    content: "Nowa notatka",
-  };
-  const accessToken = localStorage.getItem("accessToken");
-  try {
-    const response = await axios.post("https://flash-card-master-backend.vercel.app/notes/", note, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    console.log("Note created successfully:", response.data);
-  } catch (error) {
-    console.error("Error creating note:", error);
-  }
-};
-
-export const createEvent = async (eventData) => {
-  try {
-    const accessToken = localStorage.getItem("accessToken");
-
-    const response = await axios.post(
-      "https://flash-card-master-backend.vercel.app/events/",
-      eventData,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await api.put(`/notes/${id}/`, { title, content });
     return response.data;
   } catch (error) {
-    console.error("Error creating event:", error);
+    console.error("Error updating note:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const deleteNote = async (id) => {
+  try {
+    await api.delete(`/notes/${id}/`);
+  } catch (error) {
+    console.error("Error deleting note:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const createNote = async () => {
+  try {
+    const response = await api.post(`/notes/`, { title: "Nowa notatka", content: "Nowa notatka" });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating note:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// Flashcards
+export const fetchFlashCards = async (id) => {
+  try {
+    const response = await api.get(`/notes/${id}/flashcards`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching flashcards:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const GetFlashCardDetails = async (id) => {
+  try {
+    const response = await api.get(`/notes/flashcard/${id}/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching flashcard details:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const CreateFlashCard = async (id, flashcard) => {
+  try {
+    const response = await api.post(`/notes/${id}/flashcards`, flashcard);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating flashcard:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const UpdateFlashCard = async (id, flashcard) => {
+  try {
+    const response = await api.put(`/notes/flashcard/${id}/`, flashcard);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating flashcard:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const DeleteFlashCard = async (id) => {
+  try {
+    await api.delete(`/notes/flashcard/${id}/`);
+  } catch (error) {
+    console.error("Error deleting flashcard:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// Events
+export const createEvent = async (eventData) => {
+  try {
+    const response = await api.post(`/events/`, eventData);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating event:", error.response?.data || error.message);
     throw error;
   }
 };
 
 export const getEvents = async (filter) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
-    let url = 'https://flash-card-master-backend.vercel.app/events/';
-    
-    if (filter === 'active') {
-      url += '?is_active=true';
-    } else if (filter === 'completed') {
-      url += '?is_active=false';
-    }
+    let url = `/events/`;
+    if (filter === "active") url += "?is_active=true";
+    if (filter === "completed") url += "?is_active=false";
 
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await api.get(url);
     return response.data;
   } catch (error) {
-    console.error("Error fetching events:", error);
+    console.error("Error fetching events:", error.response?.data || error.message);
     throw error;
   }
 };
 
 export const updateEvent = async (id, eventData) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
-
-    const response = await axios.put(
-      `https://flash-card-master-backend.vercel.app/events/${id}/`,
-      eventData,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await api.put(`/events/${id}/`, eventData);
     return response.data;
   } catch (error) {
-    console.error("Error updating event:", error);
+    console.error("Error updating event:", error.response?.data || error.message);
     throw error;
   }
 };
-export const mark_as_completed = async (id) => {
+
+export const markAsCompleted = async (id) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
-
-    const response = await axios.post(
-      `https://flash-card-master-backend.vercel.app/events/${id}/mark_as_completed/`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await api.post(`/events/${id}/mark_as_completed/`);
     return response.data;
   } catch (error) {
-    console.error("Error updating event:", error);
+    console.error("Error marking event as completed:", error.response?.data || error.message);
     throw error;
   }
 };
+
 export const deleteEvent = async (id) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
-
-    await axios.delete(
-      `https://flash-card-master-backend.vercel.app/events/${id}/`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    await api.delete(`/events/${id}/`);
   } catch (error) {
-    console.error("Error deleting event:", error);
+    console.error("Error deleting event:", error.response?.data || error.message);
     throw error;
   }
 };
 
-export const sendPasswordReset = async (email) =>{
+// Password Reset
+export const sendPasswordReset = async (email) => {
   try {
-    const response = await axios.post(
-      "https://flash-card-master-backend.vercel.app/account/password_reset/",
-      {"email":email }
-    );
+    const response = await api.post(`/account/password_reset/`, { email });
     return response.data;
   } catch (error) {
-    console.error("Error sending password reset email:", error);
+    console.error("Error sending password reset email:", error.response?.data || error.message);
     throw error;
   }
-}
+};
 
-export const resetPassword = async ( token, password) =>{
+export const resetPassword = async (token, password) => {
   try {
-    const response = await axios.post(
-      "https://flash-card-master-backend.vercel.app/account/password_reset/",
-      { token, password }
-    );
+    const response = await api.post(`/account/password_reset/`, { token, password });
     return response.data;
   } catch (error) {
-    console.error("Error resetting password:", error);
+    console.error("Error resetting password:", error.response?.data || error.message);
     throw error;
   }
-}
+};
 
-export const SearchNoteByKeyword = async(keyword) => {
+// Search
+export const searchNoteByKeyword = async (keyword) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
-  
-    const response = await axios.get(
-      `https://flash-card-master-backend.vercel.app/notes/filter/?keyword=${keyword}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-  
-    );
+    const response = await api.get(`/notes/filter/`, { params: { keyword } });
     return response.data;
   } catch (error) {
-    console.error("Błąd pobierania danych:", error);
+    console.error("Error searching notes:", error.response?.data || error.message);
     throw error;
   }
-}
+};
+
+export const fetchFriendRequests = async () => {
+  try {
+    const response = await api.get(`account/friend-requests/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching friend requests:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+export const createFriendRequest = async (toUserId) => {
+  try {
+    const response = await api.post(`account/friend-requests/`, { to_user: toUserId });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating friend request:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+export const acceptFriendRequest = async (requestId) => {
+  try {
+    const response = await api.post(`account/friend-requests/${requestId}/accept/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error accepting friend request:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+export const rejectFriendRequest = async (requestId) => {
+  try {
+    const response = await api.delete(`account/friend-requests/${requestId}/reject/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error rejecting friend request:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const fetchFriendList = async () => {
+  try {
+    const response = await api.get(`account/friendships/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching friend list:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+export const deleteFriend = async (friendshipId) => {
+  try {
+    await api.delete(`account/friendships/${friendshipId}/`);
+    return { message: "Friendship deleted successfully." };
+  } catch (error) {
+    console.error("Error deleting friendship:", error.response?.data || error.message);
+    throw error;
+  }
+};

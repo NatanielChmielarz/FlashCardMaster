@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./challenge.scss";
-import { fetchFlashCard } from "../api";
+import { fetchFlashCards } from "../api";
 import FlipCard from "./flipcard";
 import Layout from "../layout/layout";
 import { useParams,useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ const Challenge = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchFlashCard(id); // Pobierz dane flashcard
+        const data = await fetchFlashCards(id); // Pobierz dane flashcard
         setFlashcardsData(data); // Ustaw dane w stanie komponentu
         console.log(data); // Wyświetl dane flashcard w konsoli przeglądarki
       } catch (error) {

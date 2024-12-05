@@ -166,3 +166,21 @@ class FriendRequestRejectionTestCase(TestCase):
         response = self.client.delete('/account/friend-requests/reject/999/')
         self.assertEqual(response.status_code, 404)
         self.assertIn("error", response.data)
+        
+        
+class FriendShipUnitTestCase(TestCase):
+    def setUp(self):
+        self.user1 = User.objects.create_user(email='user1@test.com', username='user1', password='password!123')
+        self.user2 = User.objects.create_user(email='user2@test.com', username='user2', password='password!123')
+        
+        
+    def test_friendship_creation(self):
+       friendship = Friendship.objects.create(user1=self.user1, user2=self.user2)
+       self.assertEqual(Friendship.objects.count(), 1)
+       self.assertEqual(friendship.user1, self.user1)
+       self.assertEqual(friendship.user2, self.user2)
+       
+    def test_friendship_deletion(self):
+        friendship = Friendship.objects.create(user1=self.user1, user2=self.user2)
+        friendship.delete()
+        self.assertEqual(Friendship.objects.count(), 0)

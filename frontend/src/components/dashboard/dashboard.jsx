@@ -7,7 +7,7 @@ import {
   fetchData,
   createNote,
   getEvents,
-  SearchNoteByKeyword,
+  searchNoteByKeyword ,
 } from "../api.js";
 import Item from "./item";
 import "./dashboard.scss";
@@ -22,7 +22,7 @@ const Dashboard = () => {
   const [keyword, setkeyword] = useState("");
   const getSerchData = async () => {
     try {
-      const response = await SearchNoteByKeyword(keyword); // Oczekujemy, że odpowiedź zawiera obiekt z polem 'notes_ids'
+      const response = await searchNoteByKeyword (keyword); // Oczekujemy, że odpowiedź zawiera obiekt z polem 'notes_ids'
 
       if (response && response.notes_ids && Array.isArray(response.notes_ids)) {
         // Przekształcamy tablicę notes_ids na tablicę obiektów
