@@ -8,7 +8,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  
+    .Errors{
+      margin-top: 10x;
+      color:red;
+    }
     .modal-content {
       background: white;
       padding: 20px;

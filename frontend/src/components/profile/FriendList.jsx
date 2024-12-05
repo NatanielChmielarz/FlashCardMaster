@@ -2,10 +2,9 @@ import React from "react";
 import "./styles/FriendList.scss";
 
 const FriendList = ({ friends,onRemoveFriend }) => {
- 
   return (
     <div className="friend-list">
-      <h3>Znajomi:</h3>
+      <h3>Friends:</h3>
       <div >
       {friends.map((friend) => (
         <div key={friend.id} className="friend-item">
