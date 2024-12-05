@@ -206,7 +206,7 @@ export const searchNoteByKeyword = async (keyword) => {
 
 export const fetchFriendRequests = async () => {
   try {
-    const response = await api.get(`account/friend-requests/`);
+    const response = await api.get(`/account/friend-requests/`);
     return response.data;
   } catch (error) {
     console.error("Error fetching friend requests:", error.response?.data || error.message);
@@ -217,7 +217,7 @@ export const fetchFriendRequests = async () => {
 
 export const createFriendRequest = async (toUserId) => {
   try {
-    const response = await api.post(`account/friend-requests/`, { to_user: toUserId });
+    const response = await api.post(`/account/friend-requests/`, { to_user: toUserId });
     return response.data;
   } catch (error) {
     console.error("Error creating friend request:", error.response?.data || error.message);
@@ -228,7 +228,7 @@ export const createFriendRequest = async (toUserId) => {
 
 export const acceptFriendRequest = async (requestId) => {
   try {
-    const response = await api.post(`account/friend-requests/${requestId}/accept/`);
+    const response = await api.post(`/account/friend-requests/${requestId}/accept/`);
     return response.data;
   } catch (error) {
     console.error("Error accepting friend request:", error.response?.data || error.message);
@@ -239,7 +239,7 @@ export const acceptFriendRequest = async (requestId) => {
 
 export const rejectFriendRequest = async (requestId) => {
   try {
-    const response = await api.delete(`account/friend-requests/${requestId}/reject/`);
+    const response = await api.delete(`/account/friend-requests/${requestId}/reject/`);
     return response.data;
   } catch (error) {
     console.error("Error rejecting friend request:", error.response?.data || error.message);
@@ -249,7 +249,7 @@ export const rejectFriendRequest = async (requestId) => {
 
 export const fetchFriendList = async () => {
   try {
-    const response = await api.get(`account/friendships/`);
+    const response = await api.get(`/account/friendships/`);
     return response.data;
   } catch (error) {
     console.error("Error fetching friend list:", error.response?.data || error.message);
@@ -260,7 +260,7 @@ export const fetchFriendList = async () => {
 
 export const deleteFriend = async (friendshipId) => {
   try {
-    await api.delete(`account/friendships/${friendshipId}/`);
+    await api.delete(`/account/friendships/${friendshipId}/`);
     return { message: "Friendship deleted successfully." };
   } catch (error) {
     console.error("Error deleting friendship:", error.response?.data || error.message);
