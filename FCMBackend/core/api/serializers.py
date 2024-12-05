@@ -59,11 +59,13 @@ class FriendRequestSerializer(serializers.ModelSerializer):
         return FriendRequest.objects.create(**validated_data)
 
 class FriendshipSerializer(serializers.ModelSerializer):
+    friends_name = serializers.SerializerMethodField()
     class Meta:
         model = Friendship
-        fields = ['id', 'user1', 'user2', 'created_at']
+        fields = ['id', 'user1', 'user2', 'created_at','friends_name']
         read_only_fields = ['created_at']
-
+    def get_friends_name(self, obj):
+        return {"username":{obj.user2.username},"email": {obj.user2.email}} if obj.user2 else None
 
 class SharedNoteSerializer(serializers.ModelSerializer):
     class Meta:

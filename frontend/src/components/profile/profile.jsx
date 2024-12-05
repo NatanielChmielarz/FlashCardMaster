@@ -24,6 +24,7 @@ const Profile = () => {
     const loadFriendsAndRequests = async () => {
       try {
         const friendList = await fetchFriendList(); // Pobierz listę znajomych
+        console.log(friendList)
         setFriends(friendList);
 
         const friendRequests = await fetchFriendRequests(); // Pobierz oczekujące zaproszenia
@@ -39,8 +40,8 @@ const Profile = () => {
 
   const sendInvite = async (toUserMail) => {
     try {
-      await createFriendRequest(toUserMail);
-      setPendingInvites((prev) => [...prev, { id: toUserMail }]);
+      const newRequest = await createFriendRequest(toUserMail);  // Załóżmy, że createFriendRequest zwraca dane zaproszenia
+      setPendingInvites((prev) => [...prev, newRequest]);  // Dodajemy pełne dane zaproszenia
     } catch (error) {
       console.error("Błąd wysyłania zaproszenia:", error);
     }
@@ -49,9 +50,9 @@ const Profile = () => {
   
   const acceptInvite = async (requestId) => {
     try {
-      await acceptFriendRequest(requestId); 
-      setPendingInvites((prev) => prev.filter((invite) => invite.id !== requestId));
-      setFriends((prev) => [...prev, { id: requestId }]); 
+      const acceptedRequest = await acceptFriendRequest(requestId);  // Akceptujemy zaproszenie i otrzymujemy dane zaproszenia
+      setPendingInvites((prev) => prev.filter((invite) => invite.id !== requestId));  // Usuwamy zaproszenie z oczekujących
+      setFriends((prev) => [...prev, acceptedRequest.from_user]);  // Dodajemy nowego znajomego do listy
     } catch (error) {
       console.error("Błąd akceptowania zaproszenia:", error);
     }
@@ -60,8 +61,8 @@ const Profile = () => {
 
   const declineInvite = async (requestId) => {
     try {
-      await rejectFriendRequest(requestId); 
-      setPendingInvites((prev) => prev.filter((invite) => invite.id !== requestId));
+      await rejectFriendRequest(requestId);  // Odrzucamy zaproszenie
+      setPendingInvites((prev) => prev.filter((invite) => invite.id !== requestId));  // Usuwamy zaproszenie z oczekujących
     } catch (error) {
       console.error("Błąd odrzucania zaproszenia:", error);
     }
@@ -70,8 +71,8 @@ const Profile = () => {
 
   const removeFriend = async (friendId) => {
     try {
-      await deleteFriend(friendId); 
-      setFriends((prev) => prev.filter((friend) => friend.id !== friendId)); 
+      await deleteFriend(friendId);  // Usuwamy znajomego
+      setFriends((prev) => prev.filter((friend) => friend.id !== friendId));  // Usuwamy znajomego z listy
     } catch (error) {
       console.error("Błąd usuwania znajomego:", error);
     }
@@ -82,26 +83,28 @@ const Profile = () => {
       <div className="app">
         <header>
           <h1>Lista znajomych</h1>
+          <div className="HeaderElements">
           <NotificationBell
             pendingCount={pendingInvites.length}
             pendingInvites={pendingInvites}
             onAccept={acceptInvite}
             onDecline={declineInvite}
           />
-        </header>
-        <FriendList
-          friends={friends}
-          onRemoveFriend={removeFriend} // Funkcja usuwania znajomych
-        />
-        <button className="add-friend-button" onClick={() => setIsModalOpen(true)}>
-          ➕ Dodaj znajomego
+          <button className="add-friend-button" onClick={() => setIsModalOpen(true)}>
+          ➕ 
         </button>
         {isModalOpen && (
           <InviteModal
             onClose={() => setIsModalOpen(false)}
             onSendInvite={sendInvite}
           />
-        )}
+        )}</div>
+        </header>
+        <FriendList
+          friends={friends}
+          onRemoveFriend={removeFriend} // Funkcja usuwania znajomych
+        />
+        
       </div>
     </Layout>
   );
