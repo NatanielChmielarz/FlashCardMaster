@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import "./styles/InviteModal.scss";
 import { createFriendRequest } from "../api";
-const InviteModal = ({ onClose, onSendInvite }) => {
+const InviteModal = ({ onClose, onSendInvite ,error}) => {
   const [inviteName, setInviteName] = useState("");
-  const [error,setError] = useState("")
-  const handleSend = () => {
-    if (inviteName.trim() === "") {
-      alert("Proszę wpisać imię i nazwisko.");
-      return;
-    }
-    onSendInvite(inviteName);
+  
+  
+  const handleSend =  () => {
+    response = onSendInvite(inviteName);
     setInviteName("");
     onClose();
   };
@@ -17,7 +14,7 @@ const InviteModal = ({ onClose, onSendInvite }) => {
   return (
     <div className="invite-modal">
       <div className="modal-content">
-        <h3>Wyślij zaproszenie</h3>
+        <h3>Send friend request.</h3>
         <input
           type="text"
           value={inviteName}
@@ -25,11 +22,11 @@ const InviteModal = ({ onClose, onSendInvite }) => {
           placeholder="Email"
         />
         <div className="modal-buttons">
-          <button onClick={handleSend}>Wyślij</button>
-          <button onClick={onClose}>Anuluj</button>
-        </div>
+          <button onClick={handleSend}>Send</button>
+          <button onClick={onClose}>Cancel</button>
+        </div><p className="Errors">{error}</p>
       </div>
-      <p>{error}</p>
+      
     </div>
   );
 };

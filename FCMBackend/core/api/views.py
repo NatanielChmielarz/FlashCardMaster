@@ -141,8 +141,8 @@ class FriendShipListView(generics.ListAPIView):
     
 class FriendShipDeleteView(generics.DestroyAPIView):
     queryset = Friendship.objects.all()
-    lookup_field = 'id'
     serializer_class = FriendshipSerializer
+    lookup_field='id'
     permission_classes = [UserOrReadOnly,IsAuthenticated]
    
     

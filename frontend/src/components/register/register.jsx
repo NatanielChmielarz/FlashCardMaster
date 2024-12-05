@@ -63,7 +63,7 @@ export default function Register() {
         })
         .catch((error) => {
           console.error("Błąd rejestracji:", error);
-          // Tutaj możesz dodać obsługę błędów
+          
         });
     }
   }
